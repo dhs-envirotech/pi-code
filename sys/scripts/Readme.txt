@@ -1,3 +1,3 @@
 Anything that supports the OS level scripting world should go in this folder, including one or more build scripts (where you put the actual command(s) for installing software, or 
 setting the PI to a known state, or simplifying such things as turning on/off a hotspot, getting current IP, system scripts placed in /etc/init.d for setting run state, etc should be placed and maintained here.
-For scripts that should live in another directory, we cn use symbolic or hard links, so that we can see custom config in one place.                                                                                                                    s
+For scripts that should live in another directory, we cn use symbolic or hard links, so that we can see custom config in one place.                                                                                                                    

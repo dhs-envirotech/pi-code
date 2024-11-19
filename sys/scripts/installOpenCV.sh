@@ -1,5 +1,5 @@
 # from command line
-apt get-install python-opencv
+apt-geti install python-opencv
 
 # When I installed, I had not updated the OS so had to run this after initial install failed
 # sudo apt --fix-missing update

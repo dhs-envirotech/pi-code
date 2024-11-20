@@ -1,5 +1,7 @@
 #!/bin/sh
 
   # putting a number of hotspot and network commands in this script with general directions
+  # network manager command line interface
   # nmcli 
-  # sudo iwlist wlan0 scan
+  # scan for names (SSIDs) of available networks
+  # sudo iwlist scan | grep ESSID

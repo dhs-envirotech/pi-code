@@ -1,0 +1,5 @@
+#!/bin/sh
+
+  # putting a number of hotspot and network commands in this script with general directions
+  # nmcli 
+  # sudo iwlist wlan0 scan

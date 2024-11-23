@@ -2,6 +2,11 @@
 
   # putting a number of hotspot and network commands in this script with general directions
   # network manager command line interface
-  # nmcli 
+  # Turn on your hotspot
+  # sudo nmcli device wifi hotspot ssid <your_hotspot_name> password <your_hotspot_password> ifname wlan0
+  # Turn off a hotspot
+  # sudo nmcli connection down <hotspot_connection_name>
+  # connect to an existing network
+  # sudo nmcli device wifi connect <SSID> password <password>
   # scan for names (SSIDs) of available networks
   # sudo iwlist scan | grep ESSID

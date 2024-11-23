@@ -25,7 +25,13 @@
   # sudo nmcli connection down <hotspot_connection_name>
   # connect to an existing network
   # sudo nmcli device wifi connect <SSID> password <password>
+
+  # See: https://www.jeffgeerling.com/blog/2023/nmcli-wifi-on-raspberry-pi-os-12-bookworm
+
+  # iwlist
+
+  # sudo nmcli device wifi connect <SSID> password <password>
   # scan for names (SSIDs) of available networks
   # sudo iwlist scan | grep ESSID
 
-  # See: https://www.jeffgeerling.com/blog/2023/nmcli-wifi-on-raspberry-pi-os-12-bookworm
+

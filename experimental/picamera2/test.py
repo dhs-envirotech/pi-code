@@ -48,6 +48,12 @@ class StreamingOutput(io.BufferedIOBase):
 		
 #defines the function that generates our frames
 camera = Camera()
+# see if we can set up a template
+@app.route('/')
+def index():
+    """Render the main page with the video feed."""
+    return render_template('index.html')
+# end of try to render a template
 
 def genFrames():
 	while True:

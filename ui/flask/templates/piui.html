@@ -31,12 +31,20 @@
  <div class="container ">
   <div class="columns is-v-centered is-multiline">
        <div class=" column is-6-tablet is-5-desktop has-text-centered">
-         <img src="./img/road.jpg" alt="" sizes="" srcset=""> 
+         <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Video Feed">
+
        </div>
     
  
   <div class="column is-6-tablet is-5-desktop has-text-centered"> 
-       <img src="./img/dribble-joystick.png" alt="" class="pix6"><br>
+    <div class="message">
+        <div class="message-header">Robot Controller</div> 
+        <div class="message-body">
+       <div id="joystick-container" class="pix6">
+            <div id="joystick"></div>
+       </div>
+       </div>
+       <br> 
        <button class="button">Start</button>
        <button class="button">Stop</button>
        <button class="button">Forward</button>
@@ -53,6 +61,32 @@
    
  </div>
  </div>
-  
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var joystickContainer = document.getElementById('joystick-container');
+            var joystick = nipplejs.create({
+                zone: joystickContainer,
+                mode: 'static',
+                position: { top: 5, left: 5 },
+                color: 'blue'
+            });
+
+            joystick.on('move', function (evt, data) {
+                // Send joystick data to the server (Flask)
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/control');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({ angle: data.angle.degree, force: data.force }));
+            });
+
+            joystick.on('end', function () {
+                // Stop the motor when the joystick is released
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/stop');
+                xhr.send();
+            });
+        });
+    </script>  
   </body>
 </html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry Pi Motor Controller</title>
+   
+    
+   <!-->     <link rel="{{ url_for('static', filename='bulma.min.css') }}" rel="stylesheet"> -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" rel="stylesheet">
+         <script defer src=""{{url_for('static', filename='all.js')}}"></script>
+     
+    
+    
+    <style>
+        /* Custom CSS for joystick */
+        .joystick {
+            width: 200px;
+            height: 200px;
+            background-color: #f5f5f5;
+            border-radius: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .joystick-center {
+            width: 60px;
+            height: 60px;
+            background-color: #3273dc;
+            border-radius: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+            :root {
+ 
+   --primary: #46287b; /* Dark gray */
+  --link: #4b1729;    /* Medium gray */
+  --info: #cdcdcd;    /* Light gray */
+  --success: #aaaaaa; /* Silver */
+  --warning: #4b1729; /* Soft gray */
+  --danger: #d92c4c;  /* Almost white */
+ 
+    }
+
+    .box {
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .has-background-primary {
+      background-color: var(--primary) !important;
+    }
+    .has-background-link {
+      background-color: var(--link) !important;
+    }
+    .has-background-info {
+      background-color: var(--info) !important;
+    }
+    .has-background-success {
+      background-color: var(--success) !important;
+    }
+    .has-background-warning {
+      background-color: var(--warning) !important;
+    }
+    .has-background-danger {
+      background-color: var(--danger) !important;
+    }
+    
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Raspberry Pi Motor Controller</h1>
+            <div class="columns">
+                <!-- Video Feed Column -->
+                <div class="column">
+                    <div class="box">
+                        <h2 class="subtitle">Video Feed</h2>
+                       
+                              <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Video Feed">
+                      
+                      
+                    </div>
+                </div>
+
+                <!-- Virtual Joystick Column -->
+              <div class="column">
+                    <div class="box" id="joystick-container" align-content center has-background-light  style="padding-left: 10%;padding-right: 10%;padding-top:10%;padding-bottom:5%; " >
+                        <h2 class="subtitle">Virtual Joystick</h2>
+                      
+                      
+                    </div>
+                </div> 
+                
+
+                <!-- Button Controls and Feedback Column -->
+                <div class="column">
+                    <div class="box">
+                        <h2 class="subtitle">Controls and Feedback</h2>
+                        <div class="buttons">
+                            <button class="button is-primary">Start</button>
+                            <button class="button is-warning">Stop</button>
+                            <button class="button is-danger">Emergency Stop</button>
+                        </div>
+                        <div class="content">
+                            <h3 class="subtitle is-5">Status:</h3>
+                            <p><strong>Speed:</strong> 0 RPM</p>
+                            <p><strong>Direction:</strong> Stopped</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      <script src="{{ url_for('static', filename='nipplejs.min.js') }}"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var joystickContainer = document.getElementById('joystick-container');
+            var joystick = nipplejs.create({
+                zone: joystickContainer,
+                mode: 'static',
+                position: { top: 5, left: 5 },
+                color: 'blue'
+            });
+
+            joystick.on('move', function (evt, data) {
+                // Send joystick data to the server (Flask)
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/control');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({ angle: data.angle.degree, force: data.force }));
+            });
+
+            joystick.on('end', function () {
+                // Stop the motor when the joystick is released
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/stop');
+                xhr.send();
+            });
+        });
+    </script>  
+</body>
+</html>

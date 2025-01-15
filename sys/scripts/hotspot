@@ -34,4 +34,10 @@
   # scan for names (SSIDs) of available networks
   # sudo iwlist scan | grep ESSID
 
+  # How to determine what devices are connected to your hotspot
+  # will show IP and MAC address of all connected devices
+  # sudo arp -a
+
+
+
 
